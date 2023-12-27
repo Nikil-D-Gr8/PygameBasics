@@ -1,0 +1,57 @@
+import pygame
+from sys import exit 
+
+#basically like starting a car 
+pygame.init()
+# creating a screen for the game to run 
+game_width, game_height = 800 , 400 
+screen = pygame.display.set_mode((game_width,game_height))
+# customising the game screen like names and stuff
+pygame.display.set_caption("Nikil D Gr8")
+# we are creating a clock object to keep track of time as well as framerate
+clock = pygame.time.Clock()
+# we are gonna make small screen or scrren inside the main screen and display floor,sky and some texts in it
+floor_surface = pygame.image.load("C:/Users/sniki/OneDrive/Desktop/game/graphics/ground.png").convert_alpha()
+sky_surface = pygame.image.load("C:/Users/sniki/OneDrive/Desktop/game/graphics/Sky.png").convert_alpha()
+# making a font sit inside a variable and then use it on a surface
+# the text render method needs the text to display, if antialiasing is neede or not and then the colour
+text_font = pygame.font.Font("C:/Users/sniki/OneDrive/Desktop/game/font/Pixeltype.ttf",50)
+text_surface = text_font.render("My game" , False , "Black")
+# we are gonna start importing characters now
+snail_pic_1 = pygame.image.load("C:/Users/sniki/OneDrive/Desktop/game/graphics/snail/snail1.png").convert_alpha()
+snail_pic_2 = pygame.image.load("C:/Users/sniki/OneDrive/Desktop/game/graphics/snail/snail2.png").convert_alpha()
+snail_x = 800
+# we are gonna add player character from now on
+player_surface = pygame.image.load("C:/Users/sniki/OneDrive/Desktop/game/graphics/Player/player_walk_1.png").convert_alpha()
+player_x = 0
+player_rect = player_surface.get_rect(topleft =(20,250))
+# the game screen dies off really fast to prevent it we are gonna use a while loop to leave that guy hanging
+while True :
+    # this is where the entire game runs
+    for event in pygame.event.get():
+    # puts all the events which occured into a varable
+        if event.type == pygame.QUIT:
+            # checks for desired event
+            pygame.quit()
+            # quit is opposite of init and after quit we cant use anything related to pygame but we called update
+            # To prevent that from causing any major trouble we can use exit from sys lib to exit the entire code 
+            exit()
+    # blit stands for block image transfer which is when on display screeen this other scrren is put as a block
+    screen.blit(sky_surface,(0,0))
+    screen.blit(floor_surface,(0,250))
+    screen.blit(text_surface,(300,100))
+    # using the same blit to draw a snail again and again each time changing its position
+    # we also make sure that when the snail exits the screen it also enters back in
+    snail_x -= 1
+    if snail_x < -30 : snail_x = 780
+    screen.blit(snail_pic_1,(snail_x,220))
+    # we are gonna animate the player from now
+    screen.blit(player_surface,(player_x,220))
+    pygame.display.update()
+    # the above line updates the screen and this runs again and again due to the while loop
+    # we can use it to determine the clock speed
+    # this clock tick thingy also makes sure that the loop doesnt run faster than 60 times per second 
+    clock.tick(60)
+
+
+
